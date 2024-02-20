@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SoccerLeagues.Database;
+using SoccerLeagues.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +11,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnectionPath"));
 });
+//builder.Services.AddScoped<SoccerLeaguesSeeder>();
 
 var app = builder.Build();
+
+//var scope = app.Services.CreateScope();
+
+//var seed = scope.ServiceProvider.GetRequiredService<SoccerLeaguesSeeder>();
+
+//await seed.SeedData();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
