@@ -11,6 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnectionPath"));
 });
+
+//TODO add Seeder here
 //builder.Services.AddScoped<SoccerLeaguesSeeder>();
 
 var app = builder.Build();
