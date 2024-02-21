@@ -16,15 +16,15 @@ namespace SoccerLeagues.Seeder
         {
             if (await _context.Database.CanConnectAsync())
             {
-                if (!_context.Leagues.Any())
-                {
+                //if (!_context.Leagues.Any())
+                //{
                     var league1 = new League()
                     {
-                        LeagueName = "BELGIJSKA PRO LEAGUE",
+                        LeagueName = "Test4",
                     };
                     _context.Leagues.Add(league1);
                     await _context.SaveChangesAsync();
-                }
+                //}
             }
         }
     }

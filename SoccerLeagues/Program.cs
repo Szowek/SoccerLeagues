@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using SoccerLeagues.Database;
+using SoccerLeagues.Other;
 using SoccerLeagues.Seeder;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnectionPath"));
+    var directory = VisualStudioProvider.TryGetSolutionDirectoryInfo();
+    options.UseSqlite($"DataSource={directory}\\SoccerLeaguesDB.db");
 });
 
 //TODO add Seeder here

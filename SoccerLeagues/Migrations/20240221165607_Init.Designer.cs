@@ -11,7 +11,7 @@ using SoccerLeagues.Database;
 namespace SoccerLeagues.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240220173536_Init")]
+    [Migration("20240221165607_Init")]
     partial class Init
     {
         /// <inheritdoc />
