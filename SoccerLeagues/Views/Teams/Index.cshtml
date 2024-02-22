@@ -1,0 +1,9 @@
+﻿@model List<SoccerLeagues.Models.Team>
+
+<h2>Teams</h2>
+<ul>
+    @foreach (var team in Model)
+    {
+        <li>@team.TeamName</li>
+    }
+</ul>

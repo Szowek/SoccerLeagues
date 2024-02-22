@@ -43,6 +43,21 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "teams",
+    pattern: "Teams",
+    defaults: new { controller = "Teams", action = "Index" });
+
+app.MapControllerRoute(
+    name: "matches",
+    pattern: "Matches",
+    defaults: new { controller = "Matches", action = "Index" });
+
+app.MapControllerRoute(
+    name: "leagues",
+    pattern: "Leagues",
+    defaults: new { controller = "Leagues", action = "Index" });
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
