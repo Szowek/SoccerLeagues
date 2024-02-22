@@ -1,29 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoccerLeagues.Database;
 using SoccerLeagues.Models;
+using SoccerLeagues.ModelsEntities;
 using SoccerLeagues.Seeder;
+using SoccerLeagues.Services;
 using System.Diagnostics;
 
 namespace SoccerLeagues.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger; //TODO MOVE TO Program.cs
-        private readonly ApplicationDbContext _context; //TODO MOVE TO Program.cs
-        private readonly SoccerLeaguesSeeder _seeder;
+        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
+        private readonly ILeagueService _leagueService;
+        private readonly ILeagueLog _leagueLog;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, ILeagueService leagueService, ILeagueLog leagueLog)
         {
-            _logger = logger; //TODO MOVE TO Program.cs
-            _context = context; //TODO MOVE TO Program.cs
-            _seeder = new SoccerLeaguesSeeder(context);
+            _logger = logger;
+            _leagueService = leagueService;
+            _leagueLog = leagueLog;
         }
 
         public IActionResult Index()
         {
-            _seeder.SeedData(); //TODO MOVE TO Program.cs
             return View();
         }
+
+        //public async Task<IActionResult> Index(ModelsEntities.League league)
+        //{
+        //    await _leagueService.CreateService(league);
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {

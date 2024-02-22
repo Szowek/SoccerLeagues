@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SoccerLeagues.Models
+namespace SoccerLeagues.ModelsEntities
 {
     public class Team
     {

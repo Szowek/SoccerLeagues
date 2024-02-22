@@ -1,4 +1,5 @@
 ﻿namespace SoccerLeagues.Other
+
 {
     public static class VisualStudioProvider
     {

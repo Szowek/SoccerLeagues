@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SoccerLeagues.Models;
+using SoccerLeagues.ModelsEntities;
 
 namespace SoccerLeagues.Database
 {

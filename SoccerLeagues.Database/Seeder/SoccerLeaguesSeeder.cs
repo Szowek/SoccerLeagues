@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoccerLeagues.Database;
-using SoccerLeagues.Models;
+using SoccerLeagues.ModelsEntities;
 
 namespace SoccerLeagues.Seeder
 {
@@ -18,12 +18,13 @@ namespace SoccerLeagues.Seeder
             {
                 //if (!_context.Leagues.Any())
                 //{
-                    var league1 = new League()
-                    {
-                        LeagueName = "Test4",
-                    };
-                    _context.Leagues.Add(league1);
-                    await _context.SaveChangesAsync();
+
+                var league1 = new League()
+                {
+                    LeagueName = "Test5",
+                };
+                _context.Leagues.Add(league1);
+                await _context.SaveChangesAsync();
                 //}
             }
         }

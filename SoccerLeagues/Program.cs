@@ -1,30 +1,28 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SoccerLeagues.Database;
-using SoccerLeagues.Other;
 using SoccerLeagues.Seeder;
+using SoccerLeagues.Application.Extensions;
+using SoccerLeagues.Database.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    var directory = VisualStudioProvider.TryGetSolutionDirectoryInfo();
-    options.UseSqlite($"DataSource={directory}\\SoccerLeaguesDB.db");
-});
-
-//TODO add Seeder here
-//builder.Services.AddScoped<SoccerLeaguesSeeder>();
+builder.Services.AddApplication();
+builder.Services.AddDatabase(builder.Configuration);
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//{
+//    var directory = VisualStudioProvider.TryGetSolutionDirectoryInfo();
+//    options.UseSqlite($"DataSource={directory}\\SoccerLeaguesDB.db");
+//});
 
 var app = builder.Build();
+var scope = app.Services.CreateScope();
+var seed = scope.ServiceProvider.GetRequiredService<SoccerLeaguesSeeder>();
 
-//var scope = app.Services.CreateScope();
-
-//var seed = scope.ServiceProvider.GetRequiredService<SoccerLeaguesSeeder>();
-
-//await seed.SeedData();
+await seed.SeedData();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -41,21 +39,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "teams",
-    pattern: "Teams",
-    defaults: new { controller = "Teams", action = "Index" });
-
-app.MapControllerRoute(
-    name: "matches",
-    pattern: "Matches",
-    defaults: new { controller = "Matches", action = "Index" });
-
-app.MapControllerRoute(
-    name: "leagues",
-    pattern: "Leagues",
-    defaults: new { controller = "Leagues", action = "Index" });
 
 app.MapControllerRoute(
     name: "default",
