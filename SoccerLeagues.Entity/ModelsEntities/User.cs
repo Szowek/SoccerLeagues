@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace SoccerLeagues.MVC.Areas.Identity.Data;
+namespace SoccerLeagues.Entities.ModelsEntities;
 
 public class User : IdentityUser
 {

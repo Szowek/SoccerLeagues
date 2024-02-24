@@ -5,6 +5,7 @@ using SoccerLeagues.Seeder;
 using SoccerLeagues.Application.Extensions;
 using SoccerLeagues.Database.Extensions;
 using Microsoft.AspNetCore.Identity;
+using SoccerLeagues.Entities.ModelsEntities;
 using SoccerLeagues.MVC.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);

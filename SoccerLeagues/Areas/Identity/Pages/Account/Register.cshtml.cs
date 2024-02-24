@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using SoccerLeagues.MVC.Areas.Identity.Data;
+using SoccerLeagues.Entities.ModelsEntities;
 
 namespace SoccerLeagues.MVC.Areas.Identity.Pages.Account
 {

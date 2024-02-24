@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SoccerLeagues.Database;
 using SoccerLeagues.Entities.ModelsEntities;
 using SoccerLeagues.Models;
+using SoccerLeagues.MVC.Areas.Identity.Data;
 using SoccerLeagues.Seeder;
 using SoccerLeagues.Services;
 using System.Diagnostics;
@@ -14,6 +15,7 @@ namespace SoccerLeagues.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        //private readonly AuthDbContext _identityContext;
         private readonly ILeagueService _leagueService;
         private readonly ILeagueLog _leagueLog;
 
@@ -23,6 +25,7 @@ namespace SoccerLeagues.Controllers
             _leagueService = leagueService;
             _leagueLog = leagueLog;
             _context = context;
+            //_identityContext = identityContext;
         }
 
         public async Task<IActionResult> Index()

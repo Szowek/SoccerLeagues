@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SoccerLeagues.MVC.Areas.Identity.Data;
+using SoccerLeagues.Entities.ModelsEntities;
 
 namespace SoccerLeagues.MVC.Areas.Identity.Data;
 
