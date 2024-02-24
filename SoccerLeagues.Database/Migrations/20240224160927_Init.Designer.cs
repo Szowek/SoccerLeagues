@@ -10,7 +10,7 @@ using SoccerLeagues.Database;
 namespace SoccerLeagues.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240224143631_Init")]
+    [Migration("20240224160927_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -116,6 +116,9 @@ namespace SoccerLeagues.Database.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastResults")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LeagueName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -124,6 +127,10 @@ namespace SoccerLeagues.Database.Migrations
 
                     b.Property<int>("MatchesPlayed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("PhaseName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Points")
                         .HasColumnType("INTEGER");

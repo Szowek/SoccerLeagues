@@ -8,6 +8,7 @@ namespace SoccerLeagues.Entities.ModelsEntities
 {
     public class TeamStatisticsViewModel
     {
+        public string LeagueName { get; set; }
         public int Position { get; set; }
         public int TeamId { get; set; }
         public string TeamName { get; set; }
@@ -19,5 +20,6 @@ namespace SoccerLeagues.Entities.ModelsEntities
         public int GoalsConceded { get; set; }
         public string ?LastResults { get; set; }
         public int Points { get; set; }
+        public string PhaseName { get; set; }
     }
 }

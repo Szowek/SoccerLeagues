@@ -27,59 +27,69 @@ namespace SoccerLeagues.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var teams = await _context.Teams.ToListAsync();
-            var teamStats = new List<TeamStatisticsViewModel>();
+            var teamsStats = new Dictionary<string, List<TeamStatisticsViewModel>>();
 
-            foreach (var team in teams)
+            foreach (var phase in _context.LeaguePhases.Include(p => p.TeamsInLeaguePhase))
             {
-                var matchesPlayed = _context.Matches
-                    .Count(match => match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId);
+                var teamStats = new List<TeamStatisticsViewModel>();
 
-                var wins = _context.Matches
-                    .Count(match => (match.FirstTeamId == team.TeamId && match.FirstTeamGoals > match.SecondTeamGoals) || (match.SecondTeamId == team.TeamId && match.SecondTeamGoals > match.FirstTeamGoals));
+                var leagueName = _context.Leagues
+                .Where(l => l.PhasesInLeague.Any(p => p.LeaguePhaseId == phase.LeaguePhaseId))
+                .Select(l => l.LeagueName)
+                .FirstOrDefault();
 
-                var draws = _context.Matches
-                    .Count(match => (match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId) && match.FirstTeamGoals == match.SecondTeamGoals);
-
-                var goalsScored = _context.Matches
-                    .Where(match => match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId)
-                    .Sum(match => team.TeamId == match.FirstTeamId ? match.FirstTeamGoals : match.SecondTeamGoals);
-
-                var goalsConceded = _context.Matches
-                    .Where(match => match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId)
-                    .Sum(match => team.TeamId == match.FirstTeamId ? match.SecondTeamGoals : match.FirstTeamGoals);
-
-                var points = (wins * 3) + draws;
-
-                var lastResults = GetLastResults(team.TeamId);
-
-                var teamStat = new TeamStatisticsViewModel
+                foreach (var team in phase.TeamsInLeaguePhase)
                 {
-                    TeamId = team.TeamId,
-                    TeamName = team.TeamName,
-                    MatchesPlayed = matchesPlayed,
-                    Wins = wins,
-                    Draws = draws,
-                    Losses = matchesPlayed - (wins + draws),
-                    GoalsScored = goalsScored,
-                    GoalsConceded = goalsConceded,
-                    LastResults = lastResults,
-                    Points = points
-                };
+                    var matchesPlayed = _context.Matches
+                        .Count(match => match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId);
 
-                teamStats.Add(teamStat);
+                    var wins = _context.Matches
+                        .Count(match => (match.FirstTeamId == team.TeamId && match.FirstTeamGoals > match.SecondTeamGoals) || (match.SecondTeamId == team.TeamId && match.SecondTeamGoals > match.FirstTeamGoals));
+
+                    var draws = _context.Matches
+                        .Count(match => (match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId) && match.FirstTeamGoals == match.SecondTeamGoals);
+
+                    var goalsScored = _context.Matches
+                        .Where(match => match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId)
+                        .Sum(match => team.TeamId == match.FirstTeamId ? match.FirstTeamGoals : match.SecondTeamGoals);
+
+                    var goalsConceded = _context.Matches
+                        .Where(match => match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId)
+                        .Sum(match => team.TeamId == match.FirstTeamId ? match.SecondTeamGoals : match.FirstTeamGoals);
+
+                    var points = (wins * 3) + draws;
+
+                    var lastResults = GetLastResults(team.TeamId);
+
+                    var teamStat = new TeamStatisticsViewModel
+                    {
+                        LeagueName = leagueName,
+                        TeamId = team.TeamId,
+                        TeamName = team.TeamName,
+                        MatchesPlayed = matchesPlayed,
+                        Wins = wins,
+                        Draws = draws,
+                        Losses = matchesPlayed - (wins + draws),
+                        GoalsScored = goalsScored,
+                        GoalsConceded = goalsConceded,
+                        LastResults = lastResults,
+                        Points = points
+                    };
+
+                    teamStats.Add(teamStat);
+                }
+
+                teamStats = teamStats.OrderByDescending(stat => stat.Points).ToList();
+
+                for (int i = 0; i < teamStats.Count; i++)
+                {
+                    teamStats[i].Position = i + 1;
+                }
+
+                teamsStats.Add(phase.LeaguePhaseName, teamStats);
             }
 
-            teamStats = teamStats.OrderByDescending(stat => stat.Points).ToList();
-            for (int i = 0; i < teamStats.Count; i++)
-            {
-                teamStats[i].Position = i + 1;
-            }
-
-            return View(teamStats);
-
-            //var leagueObj = await _leagueService.GetAll();
-            //return View(leagueObj);
+            return View(teamsStats);
         }
 
         private string GetLastResults(int teamId)
@@ -109,6 +119,15 @@ namespace SoccerLeagues.Controllers
 
             return lastResults.ToString();
         }
+
+        //private string GetPhaseNameForTeam(int teamId)
+        //{
+        //    var phase = _context.LeaguePhases
+        //        .Include(p => p.TeamsInLeaguePhase)
+        //        .FirstOrDefault(p => p.TeamsInLeaguePhase.Any(t => t.TeamId == teamId));
+
+        //    return phase != null ? phase.LeaguePhaseName : string.Empty;
+        //}
 
         public IActionResult Privacy()
         {

@@ -18,7 +18,7 @@ namespace SoccerLeagues.Seeder
             {
                 if (!_context.Leagues.Any())
                     {
-                    string[] phaseNames = { "Sezon Zasadniczy", "Play-Off. Strefa Mistrzowska.", "Conference League Play-Off" };
+                    string[] phaseNames = { "Sezon Zasadniczy", "Runda Finałowa", "Conference League Play-Off" };
                     var league1 = new League()
                     {
                         LeagueName = "Belgijska Pro League 2022/2023",
@@ -83,6 +83,80 @@ namespace SoccerLeagues.Seeder
                             var secondTeam = regularPhase.TeamsInLeaguePhase.Single(team => team.TeamName == matchData.SecondTeamName);
 
                             regularPhase.MatchesInLeaguePhase.Add(new Match
+                            {
+                                FirstTeam = firstTeam,
+                                SecondTeam = secondTeam,
+                                FirstTeamGoals = matchData.FirstTeamGoals,
+                                SecondTeamGoals = matchData.SecondTeamGoals
+                            });
+                        }
+                    }
+
+                    var playoffPhase = league1.PhasesInLeague.FirstOrDefault(phase => phase.LeaguePhaseName == "Runda Finałowa");
+                    if (playoffPhase != null)
+                    {
+                        var teamsInPlayOff = teamNames.Where(teamName => new[] { "Genk", "Union Saint-Gilloise", "Antwerp", "Club Brugge" }.Contains(teamName));
+                        foreach (var teamName in teamsInPlayOff)
+                        {
+                            var team = new Team()
+                            {
+                                TeamName = teamName,
+                                LeaguePhaseId = playoffPhase.LeaguePhaseId
+                            };
+                            playoffPhase.TeamsInLeaguePhase.Add(team);
+                        }
+
+                        var matchesDataPlayoff = new (string FirstTeamName, string SecondTeamName, int FirstTeamGoals, int SecondTeamGoals)[]
+                        {
+                            ("Genk", "Club Brugge", 3, 1),
+                            ("Union Saint-Gilloise", "Antwerp", 0, 2),
+                            ("Club Brugge", "Union Saint-Gilloise", 1, 2),
+                            ("Antwerp", "Genk", 2, 1)
+                        };
+
+                        foreach (var matchData in matchesDataPlayoff)
+                        {
+                            var firstTeam = playoffPhase.TeamsInLeaguePhase.Single(team => team.TeamName == matchData.FirstTeamName);
+                            var secondTeam = playoffPhase.TeamsInLeaguePhase.Single(team => team.TeamName == matchData.SecondTeamName);
+
+                            playoffPhase.MatchesInLeaguePhase.Add(new Match
+                            {
+                                FirstTeam = firstTeam,
+                                SecondTeam = secondTeam,
+                                FirstTeamGoals = matchData.FirstTeamGoals,
+                                SecondTeamGoals = matchData.SecondTeamGoals
+                            });
+                        }
+                    }
+
+                    var conferencePhase = league1.PhasesInLeague.FirstOrDefault(phase => phase.LeaguePhaseName == "Conference League Play-Off");
+                    if (conferencePhase != null)
+                    {
+                        var teamsInConference = teamNames.Where(teamName => new[] { "Gent", "Cercle Brugge", "Standard Liège", "Westerlo" }.Contains(teamName));
+                        foreach (var teamName in teamsInConference)
+                        {
+                            var team = new Team()
+                            {
+                                TeamName = teamName,
+                                LeaguePhaseId = conferencePhase.LeaguePhaseId
+                            };
+                            conferencePhase.TeamsInLeaguePhase.Add(team);
+                        }
+
+                        var matchesDataConference = new (string FirstTeamName, string SecondTeamName, int FirstTeamGoals, int SecondTeamGoals)[]
+                        {
+                            ("Gent", "Westerlo", 3, 1),
+                            ("Cercle Brugge", "Standard Liège", 0, 0),
+                            ("Standard Liège", "Gent", 1, 2),
+                            ("Westerlo", "Cercle Brugge", 3, 5)
+                        };
+
+                        foreach (var matchData in matchesDataConference)
+                        {
+                            var firstTeam = conferencePhase.TeamsInLeaguePhase.Single(team => team.TeamName == matchData.FirstTeamName);
+                            var secondTeam = conferencePhase.TeamsInLeaguePhase.Single(team => team.TeamName == matchData.SecondTeamName);
+
+                            conferencePhase.MatchesInLeaguePhase.Add(new Match
                             {
                                 FirstTeam = firstTeam,
                                 SecondTeam = secondTeam,

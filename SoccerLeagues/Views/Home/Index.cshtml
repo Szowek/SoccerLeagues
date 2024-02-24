@@ -1,55 +1,48 @@
-﻿@* @using SoccerLeagues.Entities.ModelsEntities
-@model IEnumerable<League>
-@{
-    ViewData["Title"] = "Home Page";
-}
-
-@foreach(var l in Model) 
-{
-    <h1>@l.LeagueName</h1>
-} 
-*@
-
- @model List<SoccerLeagues.Entities.ModelsEntities.TeamStatisticsViewModel>
+﻿@model Dictionary<string, List<SoccerLeagues.Entities.ModelsEntities.TeamStatisticsViewModel>>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = Model.FirstOrDefault().Value.FirstOrDefault()?.LeagueName;
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Drużyny</th>
-            <th>M</th>
-            <th>Z</th>
-            <th>R</th>
-            <th>P</th>
-            <th>BZ</th>
-            <th>BS</th>
-            <th>+/-</th>
-            <th>Ostatnie mecze</th>
-            <th>PKT.</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var teamStat in Model)
-        {
+@foreach (var phaseStats in Model)
+{
+    <h2>@phaseStats.Key</h2>
+
+    <table class="table">
+        <thead>
             <tr>
-                <td>@teamStat.Position</td>
-                <td>@teamStat.TeamName</td>
-                <td>@teamStat.MatchesPlayed</td>
-                <td>@teamStat.Wins</td>
-                <td>@teamStat.Draws</td>
-                <td>@teamStat.Losses</td>
-                <td>@teamStat.GoalsScored</td>
-                <td>@teamStat.GoalsConceded</td>
-                <td>@(teamStat.GoalsScored - teamStat.GoalsConceded)</td>
-                <td>@teamStat.LastResults</td>
-                <td>@teamStat.Points</td>
+                <th></th>
+                <th>Drużyny</th>
+                <th>M</th>
+                <th>Z</th>
+                <th>R</th>
+                <th>P</th>
+                <th>BZ</th>
+                <th>BS</th>
+                <th>+/-</th>
+                <th>Ostatnie mecze</th>
+                <th>PKT.</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var teamStat in phaseStats.Value)
+            {
+                <tr>
+                    <td>@teamStat.Position</td>
+                    <td>@teamStat.TeamName</td>
+                    <td>@teamStat.MatchesPlayed</td>
+                    <td>@teamStat.Wins</td>
+                    <td>@teamStat.Draws</td>
+                    <td>@teamStat.Losses</td>
+                    <td>@teamStat.GoalsScored</td>
+                    <td>@teamStat.GoalsConceded</td>
+                    <td>@(teamStat.GoalsScored - teamStat.GoalsConceded)</td>
+                    <td>@teamStat.LastResults</td>
+                    <td>@teamStat.Points</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
