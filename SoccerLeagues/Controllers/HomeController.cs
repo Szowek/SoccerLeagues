@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SoccerLeagues.Database;
 using SoccerLeagues.Entities.ModelsEntities;
 using SoccerLeagues.Models;
@@ -25,8 +26,33 @@ namespace SoccerLeagues.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var leagueObj = await _leagueService.GetAll();
-            return View(leagueObj);
+            var teamStats = await _context.Teams
+                .Select(team => new TeamStatisticsViewModel
+                {
+                    TeamId = team.TeamId,
+                    TeamName = team.TeamName,
+                    MatchesPlayed = _context.Matches.Count(match => match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId),
+                    Wins = _context.Matches.Count(match => (match.FirstTeamId == team.TeamId && match.FirstTeamGoals > match.SecondTeamGoals) || (match.SecondTeamId == team.TeamId && match.SecondTeamGoals > match.FirstTeamGoals)),
+                    Draws = _context.Matches.Count(match => (match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId) && match.FirstTeamGoals == match.SecondTeamGoals),
+                    Losses = _context.Matches.Count(match => (match.FirstTeamId == team.TeamId && match.FirstTeamGoals < match.SecondTeamGoals) || (match.SecondTeamId == team.TeamId && match.SecondTeamGoals < match.FirstTeamGoals)),
+                    GoalsScored = _context.Matches.Where(match => match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId).Sum(match => team.TeamId == match.FirstTeamId ? match.FirstTeamGoals : match.SecondTeamGoals),
+                    GoalsConceded = _context.Matches.Where(match => match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId).Sum(match => team.TeamId == match.FirstTeamId ? match.SecondTeamGoals : match.FirstTeamGoals),
+                    Points = _context.Matches.Count(match => (match.FirstTeamId == team.TeamId && match.FirstTeamGoals > match.SecondTeamGoals) || (match.SecondTeamId == team.TeamId && match.SecondTeamGoals > match.FirstTeamGoals)) * 3 +
+                             _context.Matches.Count(match => (match.FirstTeamId == team.TeamId || match.SecondTeamId == team.TeamId) && match.FirstTeamGoals == match.SecondTeamGoals)
+                })
+                .OrderByDescending(teamStat => teamStat.Points)
+                .ToListAsync();
+
+            teamStats = teamStats.OrderByDescending(x => x.Points).ToList();
+            for (int i = 0; i < teamStats.Count; i++)
+            {
+                teamStats[i].Position = i + 1;
+            }
+
+            return View(teamStats);
+
+            //var leagueObj = await _leagueService.GetAll();
+            //return View(leagueObj);
         }
 
         public IActionResult Privacy()

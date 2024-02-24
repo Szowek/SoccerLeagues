@@ -16,80 +16,75 @@ namespace SoccerLeagues.Seeder
         {
             if (await _context.Database.CanConnectAsync())
             {
-                //if (!_context.Leagues.Any())
-                //{
-
-                string[] phaseNames = { "Sezon Zasadniczy", "Play-Off. Strefa Mistrzowska.", "Conference League Play-Off" };
-                var league1 = new League()
-                {
-                    LeagueName = "Belgijska Pro League 2022/2023",
-                    PhasesInLeague = new List<LeaguePhase>()
-                };
-
-                foreach (var phaseName in phaseNames)
-                {
-                    var phase = new LeaguePhase()
+                if (!_context.Leagues.Any())
                     {
-                        LeaguePhaseName = phaseName,
-                        TeamsInLeaguePhase = new List<Team>(),
-                        MatchesInLeaguePhase = new List<Match>()
+                    string[] phaseNames = { "Sezon Zasadniczy", "Play-Off. Strefa Mistrzowska.", "Conference League Play-Off" };
+                    var league1 = new League()
+                    {
+                        LeagueName = "Belgijska Pro League 2022/2023",
+                        PhasesInLeague = new List<LeaguePhase>()
                     };
-                    league1.PhasesInLeague.Add(phase);
-                }
 
-
-                string[] teamNames = { "KRC Genk", "Union", "Antwerp", "Club Brugge", "AA Gent",
-                    "Standard Liège", "Westerlo", "Cercle Brugge", "Charleroi", "OH Leuven", "Anderlecht",
-                    "STVV", "KV Mechelen", "KV Kortrijk", "KAS Eupen", "KV Oostende",
-                    "Zulte Waregem", "RFC Seraing" };
-
-                var regularPhase = league1.PhasesInLeague.FirstOrDefault(phase => phase.LeaguePhaseName == "Sezon Zasadniczy");
-
-                if (regularPhase != null)
-                {
-                    foreach (var teamName in teamNames)
+                    foreach (var phaseName in phaseNames)
                     {
-                        var team = new Team()
+                        var phase = new LeaguePhase()
                         {
-                            TeamName = teamName,
-                            LeaguePhaseId = regularPhase.LeaguePhaseId
+                            LeaguePhaseName = phaseName,
+                            TeamsInLeaguePhase = new List<Team>(),
+                            MatchesInLeaguePhase = new List<Match>()
                         };
-                        regularPhase.TeamsInLeaguePhase.Add(team);
+                        league1.PhasesInLeague.Add(phase);
                     }
 
-                    // Tablica par drużyn i wyników
-                    var matchesData = new (string FirstTeamName, string SecondTeamName, int FirstTeamGoals, int SecondTeamGoals)[]
-                    {
-                        ("Standard Liège", "AA Gent", 2, 2),
-                        ("Charleroi", "KAS Eupen", 3, 1 ),
-                        ("KV Kortrijk", "OH Leuven", 0, 2),
-                        ("Zulte Waregem", "RFC Seraing", 2, 0),
-                        ("STVV", "Union", 1, 1),
-                        ("Club Brugge", "AA Gent", 3, 2),
-                        ("KV Mechelen", "Antwerp", 0, 2),
-                        ("Anderlecht", "KV Oostende", 2, 0),
-                        ("Westerlo", "Cercle Brugge", 2, 0)
-                    };
+                    string[] teamNames = { "KRC Genk", "Union", "Antwerp", "Club Brugge", "AA Gent",
+                        "Standard Liège", "Westerlo", "Cercle Brugge", "Charleroi", "OH Leuven", "Anderlecht",
+                        "STVV", "KV Mechelen", "KV Kortrijk", "KAS Eupen", "KV Oostende",
+                        "Zulte Waregem", "RFC Seraing" };
 
-                    // Dodawanie meczów do fazy ligowej
-                    foreach (var matchData in matchesData)
-                    {
-                        var firstTeam = regularPhase.TeamsInLeaguePhase.Single(team => team.TeamName == matchData.FirstTeamName);
-                        var secondTeam = regularPhase.TeamsInLeaguePhase.Single(team => team.TeamName == matchData.SecondTeamName);
+                    var regularPhase = league1.PhasesInLeague.FirstOrDefault(phase => phase.LeaguePhaseName == "Sezon Zasadniczy");
 
-                        regularPhase.MatchesInLeaguePhase.Add(new Match
+                    if (regularPhase != null)
+                    {
+                        foreach (var teamName in teamNames)
                         {
-                            FirstTeam = firstTeam,
-                            SecondTeam = secondTeam,
-                            FirstTeamGoals = matchData.FirstTeamGoals,
-                            SecondTeamGoals = matchData.SecondTeamGoals
-                        });
-                    }
-                }
+                            var team = new Team()
+                            {
+                                TeamName = teamName,
+                                LeaguePhaseId = regularPhase.LeaguePhaseId
+                            };
+                            regularPhase.TeamsInLeaguePhase.Add(team);
+                        }
 
-                _context.Leagues.Add(league1);
-                await _context.SaveChangesAsync();
-                //}
+                        var matchesData = new (string FirstTeamName, string SecondTeamName, int FirstTeamGoals, int SecondTeamGoals)[]
+                        {
+                            ("Standard Liège", "AA Gent", 2, 2),
+                            ("Charleroi", "KAS Eupen", 3, 1 ),
+                            ("KV Kortrijk", "OH Leuven", 0, 2),
+                            ("Zulte Waregem", "RFC Seraing", 2, 0),
+                            ("STVV", "Union", 1, 1),
+                            ("Club Brugge", "AA Gent", 3, 2),
+                            ("KV Mechelen", "Antwerp", 0, 2),
+                            ("Anderlecht", "KV Oostende", 2, 0),
+                            ("Westerlo", "Cercle Brugge", 2, 0)
+                        };
+
+                        foreach (var matchData in matchesData)
+                        {
+                            var firstTeam = regularPhase.TeamsInLeaguePhase.Single(team => team.TeamName == matchData.FirstTeamName);
+                            var secondTeam = regularPhase.TeamsInLeaguePhase.Single(team => team.TeamName == matchData.SecondTeamName);
+
+                            regularPhase.MatchesInLeaguePhase.Add(new Match
+                            {
+                                FirstTeam = firstTeam,
+                                SecondTeam = secondTeam,
+                                FirstTeamGoals = matchData.FirstTeamGoals,
+                                SecondTeamGoals = matchData.SecondTeamGoals
+                            });
+                        }
+                    }
+                    _context.Leagues.Add(league1);
+                    await _context.SaveChangesAsync();
+                }
             }
         }
     }

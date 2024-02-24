@@ -9,14 +9,21 @@ namespace SoccerLeagues.Database
             :base(options) { }
 
         public DbSet<League> Leagues { get; set; }
-        public DbSet<LeaguePhase> LeaguePhase { get; set; }
+        public DbSet<LeaguePhase> LeaguePhases { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamStatisticsViewModel> TeamStatisticsViewModels { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);         
-           
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TeamStatisticsViewModel>(entity =>
+            {
+                entity.HasNoKey();
+                entity.ToView(null);
+            });
+
             modelBuilder.Entity<League>()
                 .HasMany(l => l.PhasesInLeague)
                 .WithOne(p => p.League)

@@ -1,4 +1,4 @@
-﻿@using SoccerLeagues.Entities.ModelsEntities
+﻿@* @using SoccerLeagues.Entities.ModelsEntities
 @model IEnumerable<League>
 @{
     ViewData["Title"] = "Home Page";
@@ -8,6 +8,48 @@
 {
     <h1>@l.LeagueName</h1>
 } 
+*@
 
+ @model List<SoccerLeagues.Entities.ModelsEntities.TeamStatisticsViewModel>
 
+@{
+    ViewData["Title"] = "Home Page";
+}
 
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Drużyny</th>
+            <th>M</th>
+            <th>Z</th>
+            <th>R</th>
+            <th>P</th>
+            <th>BZ</th>
+            <th>BS</th>
+            <th>+/-</th>
+            <th>Ostatnie wyniki</th>
+            <th>PKT.</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var teamStat in Model)
+        {
+            <tr>
+                <td>@teamStat.Position</td>
+                <td>@teamStat.TeamName</td>
+                <td>@teamStat.MatchesPlayed</td>
+                <td>@teamStat.Wins</td>
+                <td>@teamStat.Draws</td>
+                <td>@teamStat.Losses</td>
+                <td>@teamStat.GoalsScored</td>
+                <td>@teamStat.GoalsConceded</td>
+                <td>@(teamStat.GoalsScored - teamStat.GoalsConceded)</td>
+                <td><!-- TODO: ostatnie wyniki --></td>
+                <td>@teamStat.Points</td>
+            </tr>
+        }
+    </tbody>
+</table>

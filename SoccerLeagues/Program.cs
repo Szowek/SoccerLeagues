@@ -18,7 +18,7 @@ var app = builder.Build();
 var scope = app.Services.CreateScope();
 var seed = scope.ServiceProvider.GetRequiredService<SoccerLeaguesSeeder>();
 
-//await seed.SeedData();
+await seed.SeedData();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
