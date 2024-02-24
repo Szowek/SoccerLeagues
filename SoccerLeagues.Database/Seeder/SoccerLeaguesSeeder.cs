@@ -62,10 +62,19 @@ namespace SoccerLeagues.Seeder
                             ("KV Kortrijk", "OH Leuven", 0, 2),
                             ("Zulte Waregem", "RFC Seraing", 2, 0),
                             ("STVV", "Union", 1, 1),
-                            ("Club Brugge", "AA Gent", 3, 2),
+                            ("Club Brugge", "KRC Genk", 3, 2),
                             ("KV Mechelen", "Antwerp", 0, 2),
                             ("Anderlecht", "KV Oostende", 2, 0),
-                            ("Westerlo", "Cercle Brugge", 2, 0)
+                            ("Westerlo", "Cercle Brugge", 2, 0),
+                            ("Union", "Charleroi", 1, 0),
+                            ("Cercle Brugge", "Anderlecht", 1, 0 ),
+                            ("OH Leuven", "Westerlo", 2, 0),
+                            ("KV Oostende", "KV Mechelen", 2, 1),
+                            ("AA Gent", "STVV", 1, 1),
+                            ("KRC Genk", "Standard Liège", 3, 1),
+                            ("KAS Eupen", "Club Brugge", 2, 1),
+                            ("RFC Seraing", "KV Kortrijk", 0, 1),
+                            ("Antwerp", "Zulte Waregem", 1, 0)
                         };
 
                         foreach (var matchData in matchesData)

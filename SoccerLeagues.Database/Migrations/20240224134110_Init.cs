@@ -24,7 +24,7 @@ namespace SoccerLeagues.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LeaguePhase",
+                name: "LeaguePhases",
                 columns: table => new
                 {
                     LeaguePhaseId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -34,9 +34,9 @@ namespace SoccerLeagues.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LeaguePhase", x => x.LeaguePhaseId);
+                    table.PrimaryKey("PK_LeaguePhases", x => x.LeaguePhaseId);
                     table.ForeignKey(
-                        name: "FK_LeaguePhase_Leagues_LeagueId",
+                        name: "FK_LeaguePhases_Leagues_LeagueId",
                         column: x => x.LeagueId,
                         principalTable: "Leagues",
                         principalColumn: "LeagueId",
@@ -56,9 +56,9 @@ namespace SoccerLeagues.Database.Migrations
                 {
                     table.PrimaryKey("PK_Teams", x => x.TeamId);
                     table.ForeignKey(
-                        name: "FK_Teams_LeaguePhase_LeaguePhaseId",
+                        name: "FK_Teams_LeaguePhases_LeaguePhaseId",
                         column: x => x.LeaguePhaseId,
-                        principalTable: "LeaguePhase",
+                        principalTable: "LeaguePhases",
                         principalColumn: "LeaguePhaseId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -79,9 +79,9 @@ namespace SoccerLeagues.Database.Migrations
                 {
                     table.PrimaryKey("PK_Matches", x => x.MatchId);
                     table.ForeignKey(
-                        name: "FK_Matches_LeaguePhase_LeaguePhaseId",
+                        name: "FK_Matches_LeaguePhases_LeaguePhaseId",
                         column: x => x.LeaguePhaseId,
-                        principalTable: "LeaguePhase",
+                        principalTable: "LeaguePhases",
                         principalColumn: "LeaguePhaseId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -99,8 +99,8 @@ namespace SoccerLeagues.Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_LeaguePhase_LeagueId",
-                table: "LeaguePhase",
+                name: "IX_LeaguePhases_LeagueId",
+                table: "LeaguePhases",
                 column: "LeagueId");
 
             migrationBuilder.CreateIndex(
@@ -134,7 +134,7 @@ namespace SoccerLeagues.Database.Migrations
                 name: "Teams");
 
             migrationBuilder.DropTable(
-                name: "LeaguePhase");
+                name: "LeaguePhases");
 
             migrationBuilder.DropTable(
                 name: "Leagues");
