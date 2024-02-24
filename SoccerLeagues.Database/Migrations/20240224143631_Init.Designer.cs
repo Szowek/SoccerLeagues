@@ -10,7 +10,7 @@ using SoccerLeagues.Database;
 namespace SoccerLeagues.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240224134110_Init")]
+    [Migration("20240224143631_Init")]
     partial class Init
     {
         /// <inheritdoc />

@@ -30,7 +30,7 @@
             <th>BZ</th>
             <th>BS</th>
             <th>+/-</th>
-            <th>Ostatnie wyniki</th>
+            <th>Ostatnie mecze</th>
             <th>PKT.</th>
         </tr>
     </thead>
@@ -47,7 +47,7 @@
                 <td>@teamStat.GoalsScored</td>
                 <td>@teamStat.GoalsConceded</td>
                 <td>@(teamStat.GoalsScored - teamStat.GoalsConceded)</td>
-                <td><!-- TODO: ostatnie wyniki --></td>
+                <td>@teamStat.LastResults</td>
                 <td>@teamStat.Points</td>
             </tr>
         }

@@ -17,8 +17,7 @@ namespace SoccerLeagues.Entities.ModelsEntities
         public int Losses { get; set; }
         public int GoalsScored { get; set; }
         public int GoalsConceded { get; set; }
-        public int GoalDifference => GoalsScored - GoalsConceded;
-        public string LastResults { get; set; }
+        public string ?LastResults { get; set; }
         public int Points { get; set; }
     }
 }
