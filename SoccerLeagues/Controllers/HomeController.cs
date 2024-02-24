@@ -120,18 +120,20 @@ namespace SoccerLeagues.Controllers
             return lastResults.ToString();
         }
 
-        //private string GetPhaseNameForTeam(int teamId)
-        //{
-        //    var phase = _context.LeaguePhases
-        //        .Include(p => p.TeamsInLeaguePhase)
-        //        .FirstOrDefault(p => p.TeamsInLeaguePhase.Any(t => t.TeamId == teamId));
-
-        //    return phase != null ? phase.LeaguePhaseName : string.Empty;
-        //}
-
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult GetMatchesForTeam(string teamName)
         {
-            return View();
+            var matches = _context.Matches
+                .Where(match => match.FirstTeam.TeamName == teamName || match.SecondTeam.TeamName == teamName)
+                .Select(match => new {
+                    Opponent = (match.FirstTeam.TeamName == teamName) ? match.SecondTeam.TeamName : match.FirstTeam.TeamName,
+                    Score = (match.FirstTeam.TeamName == teamName) ? $"{match.FirstTeamGoals} - {match.SecondTeamGoals}" : $"{match.SecondTeamGoals} - {match.FirstTeamGoals}",
+                    Result = (match.FirstTeam.TeamName == teamName) ?
+                        (match.FirstTeamGoals > match.SecondTeamGoals ? "Wygrana" : (match.FirstTeamGoals < match.SecondTeamGoals ? "Porażka" : "Remis")) :
+                        (match.SecondTeamGoals > match.FirstTeamGoals ? "Wygrana" : (match.SecondTeamGoals < match.FirstTeamGoals ? "Porażka" : "Remis"))
+                })
+                .ToList();
+            return Json(matches);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -15,8 +15,8 @@ namespace SoccerLeagues.Database.Extensions
     public static class ServiceCollectionExtensions
     {
         public static void AddDatabase(this IServiceCollection services, IConfiguration configuration) {
-            var directory = VisualStudioProvider.TryGetSolutionDirectoryInfo();
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"DataSource={directory}\\SoccerLeaguesDB.db"));
+            //var directory = VisualStudioProvider.TryGetSolutionDirectoryInfo();
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite($"DataSource=SoccerLeagueDb.db"));
             services.AddScoped<SoccerLeaguesSeeder>();
             services.AddScoped<ILeagueLog, LeagueLog>();
         }

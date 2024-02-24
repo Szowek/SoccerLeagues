@@ -7,7 +7,7 @@
         {
             var directory = new DirectoryInfo(
                 currentPath ?? Directory.GetCurrentDirectory());
-            while (directory != null && !directory.GetFiles("*.db").Any())
+            while (directory != null && !directory.GetFiles("SoccerLeagueDb.db").Any())
             {
                 directory = directory.Parent;
             }

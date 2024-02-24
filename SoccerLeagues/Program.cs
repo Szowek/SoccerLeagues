@@ -4,8 +4,15 @@ using SoccerLeagues.Database;
 using SoccerLeagues.Seeder;
 using SoccerLeagues.Application.Extensions;
 using SoccerLeagues.Database.Extensions;
+using Microsoft.AspNetCore.Identity;
+using SoccerLeagues.MVC.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
+
+builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlite(connectionString));
+
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AuthDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -39,5 +46,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();
