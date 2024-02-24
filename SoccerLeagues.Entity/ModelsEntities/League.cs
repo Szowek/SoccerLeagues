@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using SoccerLeagues.Entities.ModelsEntities;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SoccerLeagues.ModelsEntities
+namespace SoccerLeagues.Entities.ModelsEntities
 {
     public interface ILeagueLog
     {
@@ -11,8 +12,6 @@ namespace SoccerLeagues.ModelsEntities
     {
         public int LeagueId { get; set; }
         public string ?LeagueName { get; set; }
-        public List<Team> ?TeamsInLeague { get; set; }        
-        public List<Match> ?MatchesInleague { get; set; }
-
+        public List<LeaguePhase> ?PhasesInLeague { get; set; }
     }
 }

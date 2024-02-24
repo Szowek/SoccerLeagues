@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SoccerLeagues.ModelsEntities;
+using SoccerLeagues.Entities.ModelsEntities;
 
 namespace SoccerLeagues.Database
 {
@@ -9,24 +9,31 @@ namespace SoccerLeagues.Database
             :base(options) { }
 
         public DbSet<League> Leagues { get; set; }
+        public DbSet<LeaguePhase> LeaguePhase { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Team> Teams { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);         
+           
             modelBuilder.Entity<League>()
-                .HasMany(l => l.TeamsInLeague)
-                .WithOne(t => t.Leagues)
-                .HasForeignKey(t => t.LeagueId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<League>()
-                .HasMany(l => l.MatchesInleague)
-                .WithOne(m => m.League)
-                .HasForeignKey(m => m.LeagueId)
+                .HasMany(l => l.PhasesInLeague)
+                .WithOne(p => p.League)
+                .HasForeignKey(p => p.LeagueId)
+                .OnDelete(DeleteBehavior.Cascade);            
+            
+            modelBuilder.Entity<LeaguePhase>()
+                .HasMany(lp => lp.TeamsInLeaguePhase)
+                .WithOne(t => t.LeaguePhase)
+                .HasForeignKey(t => t.LeaguePhaseId)
+                .OnDelete(DeleteBehavior.Cascade);            
+            
+            modelBuilder.Entity<LeaguePhase>()
+                .HasMany(lp => lp.MatchesInLeaguePhase)
+                .WithOne(m => m.LeaguePhase)
+                .HasForeignKey(m => m.LeaguePhaseId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
-
     }
 }

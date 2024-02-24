@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoccerLeagues.Database;
+using SoccerLeagues.Entities.ModelsEntities;
 using SoccerLeagues.Models;
-using SoccerLeagues.ModelsEntities;
 using SoccerLeagues.Seeder;
 using SoccerLeagues.Services;
 using System.Diagnostics;
@@ -20,18 +20,14 @@ namespace SoccerLeagues.Controllers
             _logger = logger;
             _leagueService = leagueService;
             _leagueLog = leagueLog;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var leagueObj = await _leagueService.GetAll();
+            return View(leagueObj);
         }
-
-        //public async Task<IActionResult> Index(ModelsEntities.League league)
-        //{
-        //    await _leagueService.CreateService(league);
-        //    return View();
-        //}
 
         public IActionResult Privacy()
         {

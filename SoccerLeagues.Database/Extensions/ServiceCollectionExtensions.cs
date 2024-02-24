@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SoccerLeagues.Database.LeagueLogs;
-using SoccerLeagues.ModelsEntities;
+using SoccerLeagues.Entities.ModelsEntities;
 using SoccerLeagues.Other;
 using SoccerLeagues.Seeder;
 using System;

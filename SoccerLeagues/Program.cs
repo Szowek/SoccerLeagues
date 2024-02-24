@@ -12,17 +12,13 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddApplication();
 builder.Services.AddDatabase(builder.Configuration);
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//{
-//    var directory = VisualStudioProvider.TryGetSolutionDirectoryInfo();
-//    options.UseSqlite($"DataSource={directory}\\SoccerLeaguesDB.db");
-//});
+
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
 var seed = scope.ServiceProvider.GetRequiredService<SoccerLeaguesSeeder>();
 
-await seed.SeedData();
+//await seed.SeedData();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

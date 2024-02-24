@@ -1,4 +1,4 @@
-﻿using SoccerLeagues.ModelsEntities;
+﻿using SoccerLeagues.Entities.ModelsEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace SoccerLeagues.Database.LeagueLogs
+namespace SoccerLeagues.Database
 {
     public class LeagueLog : ILeagueLog
     {
@@ -22,6 +22,6 @@ namespace SoccerLeagues.Database.LeagueLogs
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<League>> GetAll() => await _context.Leagues.ToListAsync(); 
+        public async Task<IEnumerable<League>> GetAll() => await _context.Leagues.ToListAsync();
     }
 }
