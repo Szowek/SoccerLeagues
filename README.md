@@ -61,6 +61,10 @@ Zadania dodatkowe -<br>
 9 - Ogólny refactor kodu<br>
 <br>
 <br>
+<br>
+Co można dodać - możliwość zmiany ligi, panel administratora, panel użytkownika i funkcjonalności dodawania własnych lig (drużyn, meczy i faz ligowych), rozwinięcie funkcjonalności ulubinych drużyn (np. zaznaczenie na tabelach ligowych ich rekordy)
+<br>
+<br>
 Ogólny zarys najważniejszych tabeli i ich relacji<br>
 ![SoccerLeague_Tables](https://github.com/Szowek/SoccerLeagues/assets/67469783/94dd9487-ecc4-4512-bf10-06b94b22225f)
 
