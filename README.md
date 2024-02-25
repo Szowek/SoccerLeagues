@@ -59,3 +59,8 @@ Zadania dodatkowe -
 7 - Stworzenie nowego pliku kontrolera FavoriteTeamController i napisanie tam logiki związanej z zadaniem (m.in. dodawanie drużyn do listy ulubionych związanych z id użytkownika)
 8 - Stworzenie nowego widoku odpowiedzialnego za wyświetlanie danych z nowego kontrolera i zaktualizowanie Index.cshtml, aby połączyć go z nową logiką
 9 - Ogólny refactor kodu
+
+
+Ogólny zarys najważniejszych tabeli i ich relacji
+![SoccerLeague_Tables](https://github.com/Szowek/SoccerLeagues/assets/67469783/94dd9487-ecc4-4512-bf10-06b94b22225f)
+
