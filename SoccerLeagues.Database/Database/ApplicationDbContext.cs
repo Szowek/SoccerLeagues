@@ -13,6 +13,7 @@ namespace SoccerLeagues.Database
         public DbSet<Match> Matches { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamStatisticsViewModel> TeamStatisticsViewModels { get; set; }
+        public DbSet<FavoriteTeam> FavoriteTeams { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

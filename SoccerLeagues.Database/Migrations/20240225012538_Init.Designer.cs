@@ -10,14 +10,34 @@ using SoccerLeagues.Database;
 namespace SoccerLeagues.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240224175906_init")]
-    partial class init
+    [Migration("20240225012538_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.16");
+
+            modelBuilder.Entity("SoccerLeagues.Entities.ModelsEntities.FavoriteTeam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("FavoriteTeams");
+                });
 
             modelBuilder.Entity("SoccerLeagues.Entities.ModelsEntities.League", b =>
                 {
@@ -151,6 +171,17 @@ namespace SoccerLeagues.Database.Migrations
                     b.ToTable((string)null);
 
                     b.ToView(null, (string)null);
+                });
+
+            modelBuilder.Entity("SoccerLeagues.Entities.ModelsEntities.FavoriteTeam", b =>
+                {
+                    b.HasOne("SoccerLeagues.Entities.ModelsEntities.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("SoccerLeagues.Entities.ModelsEntities.LeaguePhase", b =>

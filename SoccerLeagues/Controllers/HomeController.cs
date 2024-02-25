@@ -15,7 +15,6 @@ namespace SoccerLeagues.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
-        //private readonly AuthDbContext _identityContext;
         private readonly ILeagueService _leagueService;
         private readonly ILeagueLog _leagueLog;
 
@@ -25,7 +24,6 @@ namespace SoccerLeagues.Controllers
             _leagueService = leagueService;
             _leagueLog = leagueLog;
             _context = context;
-            //_identityContext = identityContext;
         }
 
         public async Task<IActionResult> Index()
@@ -92,7 +90,7 @@ namespace SoccerLeagues.Controllers
                 teamsStats.Add(phase.LeaguePhaseName, teamStats);
             }
 
-            return View(teamsStats);
+            return View(await Task.FromResult(teamsStats));
         }
 
         private string GetLastResults(int teamId)

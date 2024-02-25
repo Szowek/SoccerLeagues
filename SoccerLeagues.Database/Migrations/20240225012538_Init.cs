@@ -5,7 +5,7 @@
 namespace SoccerLeagues.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,6 +64,26 @@ namespace SoccerLeagues.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FavoriteTeams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    TeamId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavoriteTeams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FavoriteTeams_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "TeamId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Matches",
                 columns: table => new
                 {
@@ -99,6 +119,11 @@ namespace SoccerLeagues.Database.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_FavoriteTeams_TeamId",
+                table: "FavoriteTeams",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LeaguePhases_LeagueId",
                 table: "LeaguePhases",
                 column: "LeagueId");
@@ -127,6 +152,9 @@ namespace SoccerLeagues.Database.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "FavoriteTeams");
+
             migrationBuilder.DropTable(
                 name: "Matches");
 
