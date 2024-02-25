@@ -131,7 +131,8 @@ namespace SoccerLeagues.Controllers
                     Score = (match.FirstTeam.TeamName == teamName) ? $"{match.FirstTeamGoals} - {match.SecondTeamGoals}" : $"{match.SecondTeamGoals} - {match.FirstTeamGoals}",
                     Result = (match.FirstTeam.TeamName == teamName) ?
                         (match.FirstTeamGoals > match.SecondTeamGoals ? "Wygrana" : (match.FirstTeamGoals < match.SecondTeamGoals ? "Porażka" : "Remis")) :
-                        (match.SecondTeamGoals > match.FirstTeamGoals ? "Wygrana" : (match.SecondTeamGoals < match.FirstTeamGoals ? "Porażka" : "Remis"))
+                        (match.SecondTeamGoals > match.FirstTeamGoals ? "Wygrana" : (match.SecondTeamGoals < match.FirstTeamGoals ? "Porażka" : "Remis")),
+                    PhaseName = match.LeaguePhase.LeaguePhaseName
                 })
                 .ToList();
             return Json(matches);

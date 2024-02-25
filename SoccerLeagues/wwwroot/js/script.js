@@ -21,12 +21,12 @@ function displayMatches(matches) {
 
     if (matches && matches.length > 0) {
         var table = $('<table class="table"></table>');
-        var headerRow = $('<thead><tr><th>Wynik</th><th>Przeciwna drużyna</th><th>Punkty</th></tr></thead>');
+        var headerRow = $('<thead><tr><th>Wynik</th><th>Drużyna przeciwna</th><th>Gole</th><th>Faza Ligowa</th></tr></thead>');
         table.append(headerRow);
 
         var tbody = $('<tbody></tbody>');
         matches.forEach(function (match) {
-            var row = $('<tr><td>' + match.result + '</td><td>' + match.opponent + '</td><td>' + match.score + '</td></tr>');
+            var row = $('<tr><td>' + match.result + '</td><td>' + match.opponent + '</td><td>' + match.score + '</td><td>' + match.phaseName + '</td></tr>');
             tbody.append(row);
         });
 
