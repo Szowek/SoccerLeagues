@@ -42,6 +42,10 @@ namespace SoccerLeagues.Database
                 .WithOne(m => m.LeaguePhase)
                 .HasForeignKey(m => m.LeaguePhaseId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FavoriteTeam>()
+                .HasIndex(ft => new { ft.UserId, ft.TeamId })
+                .IsUnique();
         }
     }
 }

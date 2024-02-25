@@ -33,7 +33,7 @@
             {
                 <tr>
                     <td>@teamStat.Position</td>
-                    <td><button class="show-matches" data-teamname="@teamStat.TeamName">@teamStat.TeamName</button></td>
+                    <td><button class="show-matches btn btn-primary" data-teamname="@teamStat.TeamName">@teamStat.TeamName</button></td>
                     <td>@teamStat.MatchesPlayed</td>
                     <td>@teamStat.Wins</td>
                     <td>@teamStat.Draws</td>
@@ -43,7 +43,7 @@
                     <td>@(teamStat.GoalsScored - teamStat.GoalsConceded)</td>
                     <td>@teamStat.LastResults</td>
                     <td>@teamStat.Points</td>
-                    <td><a href="@Url.Action("Create", "FavoriteTeams", new { id = teamStat.TeamId })">Dodaj do ulubionych</a></td>
+                    <td><a href="@Url.Action("Create", "FavoriteTeams", new { id = teamStat.TeamId })" class="btn btn-success">Do ulubionych</a></td>
                 </tr>
             }
         </tbody>

@@ -33,7 +33,9 @@ namespace SoccerLeagues.Controllers
                 return NotFound();
             }
 
-            var existingFavoriteTeam = await _context.FavoriteTeams.FirstOrDefaultAsync(ft => ft.UserId == currentUser.Id && ft.TeamId == id);
+            var existingFavoriteTeam = await _context.FavoriteTeams
+                    .Include(ft => ft.Team)
+                    .FirstOrDefaultAsync(ft => ft.UserId == currentUser.Id && ft.Team.TeamName == team.TeamName); 
             if (existingFavoriteTeam != null)
             {
                 return RedirectToAction(nameof(Index), "Home");
