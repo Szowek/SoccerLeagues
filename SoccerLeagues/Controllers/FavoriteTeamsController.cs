@@ -19,7 +19,8 @@ namespace SoccerLeagues.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Create(int id)
+        [HttpPost]
+        public async Task<IActionResult> ToggleFavorite(int teamId)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null)
@@ -27,29 +28,32 @@ namespace SoccerLeagues.Controllers
                 return NotFound();
             }
 
-            var team = await _context.Teams.FirstOrDefaultAsync(t => t.TeamId == id);
+            var team = await _context.Teams.FirstOrDefaultAsync(t => t.TeamId == teamId);
             if (team == null)
             {
                 return NotFound();
             }
 
             var existingFavoriteTeam = await _context.FavoriteTeams
-                    .Include(ft => ft.Team)
-                    .FirstOrDefaultAsync(ft => ft.UserId == currentUser.Id && ft.Team.TeamName == team.TeamName); 
+                .FirstOrDefaultAsync(ft => ft.UserId == currentUser.Id && ft.Team.TeamName == team.TeamName);
+
             if (existingFavoriteTeam != null)
             {
-                return RedirectToAction(nameof(Index), "Home");
+                _context.FavoriteTeams.Remove(existingFavoriteTeam);
+            }
+            else
+            {
+                var favoriteTeam = new FavoriteTeam
+                {
+                    UserId = currentUser.Id,
+                    TeamId = teamId
+                };
+                _context.Add(favoriteTeam);
             }
 
-            var favoriteTeam = new FavoriteTeam
-            {
-                UserId = currentUser.Id,
-                TeamId = id
-            };
-            _context.Add(favoriteTeam);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index), "Home");
+            return Ok();
         }
 
         public async Task<IActionResult> Delete(int id)

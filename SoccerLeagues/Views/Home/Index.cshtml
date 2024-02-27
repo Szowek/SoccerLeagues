@@ -43,7 +43,9 @@
                     <td>@(teamStat.GoalsScored - teamStat.GoalsConceded)</td>
                     <td>@teamStat.LastResults</td>
                     <td>@teamStat.Points</td>
-                    <td><a href="@Url.Action("Create", "FavoriteTeams", new { id = teamStat.TeamId })" class="btn btn-success">Do ulubionych</a></td>
+                    <td>
+                        <button class="toggle-favorite btn btn-success favorite-team" data-teamid="@teamStat.TeamId">Do ulubionych</button>
+                    </td>
                 </tr>
             }
         </tbody>

@@ -15,13 +15,13 @@ namespace SoccerLeagues.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
-        private readonly ILeagueService _leagueService;
+        //private readonly ILeagueService _leagueService;
         private readonly ILeagueLog _leagueLog;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, ILeagueService leagueService, ILeagueLog leagueLog)
         {
             _logger = logger;
-            _leagueService = leagueService;
+            //_leagueService = leagueService;
             _leagueLog = leagueLog;
             _context = context;
         }
@@ -104,7 +104,8 @@ namespace SoccerLeagues.Controllers
             for (int i = 0; i < lastMatches.Count; i++)
             {
                 var match = lastMatches[i];
-                if ((match.FirstTeamId == teamId && match.FirstTeamGoals > match.SecondTeamGoals) || (match.SecondTeamId == teamId && match.SecondTeamGoals > match.FirstTeamGoals))
+                if ((match.FirstTeamId == teamId && match.FirstTeamGoals > match.SecondTeamGoals) 
+                    || (match.SecondTeamId == teamId && match.SecondTeamGoals > match.FirstTeamGoals))
                 {
                     lastResults.Append("Z");
                 }
@@ -128,7 +129,8 @@ namespace SoccerLeagues.Controllers
                 .Where(match => match.FirstTeam.TeamName == teamName || match.SecondTeam.TeamName == teamName)
                 .Select(match => new {
                     Opponent = (match.FirstTeam.TeamName == teamName) ? match.SecondTeam.TeamName : match.FirstTeam.TeamName,
-                    Score = (match.FirstTeam.TeamName == teamName) ? $"{match.FirstTeamGoals} - {match.SecondTeamGoals}" : $"{match.SecondTeamGoals} - {match.FirstTeamGoals}",
+                    Score = (match.FirstTeam.TeamName == teamName) ? $"{match.FirstTeamGoals} - {match.SecondTeamGoals}" 
+                        : $"{match.SecondTeamGoals} - {match.FirstTeamGoals}",
                     Result = (match.FirstTeam.TeamName == teamName) ?
                         (match.FirstTeamGoals > match.SecondTeamGoals ? "Wygrana" : (match.FirstTeamGoals < match.SecondTeamGoals ? "Porażka" : "Remis")) :
                         (match.SecondTeamGoals > match.FirstTeamGoals ? "Wygrana" : (match.SecondTeamGoals < match.FirstTeamGoals ? "Porażka" : "Remis")),
