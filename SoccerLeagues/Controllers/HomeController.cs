@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SoccerLeagues.Database;
 using SoccerLeagues.Entities.ModelsEntities;
@@ -13,22 +14,27 @@ namespace SoccerLeagues.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         //private readonly ILeagueService _leagueService;
         private readonly ILeagueLog _leagueLog;
+        private readonly UserManager<User> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, ILeagueService leagueService, ILeagueLog leagueLog)
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, 
+            ILeagueService leagueService, ILeagueLog leagueLog, UserManager<User> userManager)
         {
-            _logger = logger;
+            //_logger = logger;
             //_leagueService = leagueService;
             _leagueLog = leagueLog;
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
             var teamsStats = new Dictionary<string, List<TeamStatisticsViewModel>>();
+            var currentUser = await _userManager.GetUserAsync(User);
 
             foreach (var phase in _context.LeaguePhases.Include(p => p.TeamsInLeaguePhase))
             {
@@ -88,6 +94,16 @@ namespace SoccerLeagues.Controllers
                 }
 
                 teamsStats.Add(phase.LeaguePhaseName, teamStats);
+            }
+
+            if (currentUser != null)
+            {
+                var favoriteTeamsIds = await _context.FavoriteTeams
+                    .Where(ft => ft.UserId == currentUser.Id)
+                    .Select(ft => ft.TeamId)
+                    .ToListAsync();
+
+                ViewBag.FavoriteTeamsIds = favoriteTeamsIds;
             }
 
             return View(await Task.FromResult(teamsStats));
