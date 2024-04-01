@@ -8,7 +8,7 @@ You can also check all matches that the team you choose played. Registred users 
 <br>
 Project steps:<br>
 Main steps -<br>
-1 - Installed NuGet packages such as EntityFramework, Sqlite<br>
+1 - Decided to use EntityFramework, Sqlite<br>
 3 - Created ApplicationDbContext.cs responsible for getting DbSet objects from Models<br>
 4 - Initialised Models, mapped them via ApplicationDbContext<br>
 5 - Database connection&migration<br>
@@ -18,7 +18,7 @@ Main steps -<br>
 9 - Printed data in Index.cshtml<br>
 <br>
 Additional features steps -<br>
-1 - Installed NuGet package Web.CodeGenerator to generate blueprints for Identity files<br>
+1 - Decided to use Web.CodeGenerator to generate blueprints for Identity files<br>
 2 - Decided to keep Identity database and League Soccer database separate, still using Sqlite<br>
 2 - Created Identity model and identity db context<br>
 3 - Disabled email confirmation as its not needed in app current state<br>
@@ -39,7 +39,7 @@ Można również sprawdzić wszystkie mecze, w których grała wybrana drużyna.
 <br>
 Podejmowane przeze mnie kroki:<br>
 Główne funkcjonalności -<br>
-1 - Zainstalowanie pakietów NuGet, takich jak EntityFramework, Sqlite<br>
+1 - Decyzja o użyciu EntityFramework, Sqlite<br>
 3 - Stworzenie ApplicationDbContext.cs odpowiedzialnego za pobieranie obiektów DbSet z modeli<br>
 4 - Inicjalizacja modeli, zmapowanie ich za pomocą ApplicationDbContext<br>
 5 - Połączenie z bazą danych i migracja<br>
@@ -49,7 +49,7 @@ Główne funkcjonalności -<br>
 9 - Wyświetlanie danych w Index.cshtml<br>
 <br>
 Dodatkowe funkcjonalności -<br>
-1 - Zainstalowanie pakietu NuGet Web.CodeGenerator do generowania szablonów plików Identity, użycie AspNetCore.Identity<br>
+1 - Decyzja o użyciu Web.CodeGenerator do generowania szablonów plików Identity, użycie AspNetCore.Identity<br>
 2 - Zdecydowałem się na oddzielenie bazy danych Identity i bazy danych Ligi Piłkarskiej, wciąż korzystam z Sqlite<br>
 2 - Stworzenie modelu Identity i kontekstu bazy danych Identity<br>
 3 - Wyłączenie potwierdzania adresu e-mail, ponieważ nie jest to potrzebne w obecnym stanie aplikacji, a ułatwia testowanie<br>
